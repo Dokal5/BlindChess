@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Banqi / Dark Chess</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header>
+        <h1>Banqi (半棋) / Dark Chess</h1>
+        <p class="subtitle">Local 2-player web version — flip hidden pieces, move, and capture.</p>
+      </header>
+
+      <section class="controls">
+        <button id="new-game">New Game</button>
+        <button id="pass-turn">Pass Turn</button>
+      </section>
+
+      <section class="status-panel">
+        <p><strong>Turn:</strong> <span id="current-turn">Red</span></p>
+        <p><strong>Red Captures:</strong> <span id="red-captures">0</span></p>
+        <p><strong>Black Captures:</strong> <span id="black-captures">0</span></p>
+        <p id="message">Flip any facedown piece to begin.</p>
+      </section>
+
+      <section class="legend">
+        <h2>Quick Rules</h2>
+        <ul>
+          <li>Board is 4×8. A turn is either <strong>flip one hidden piece</strong> or <strong>move one revealed piece</strong>.</li>
+          <li>Most pieces move/capture 1 square orthogonally (no diagonals).</li>
+          <li>Cannon (砲/炮) captures by jumping exactly one piece in a straight line.</li>
+          <li>Capture order (high → low): General, Advisor, Elephant, Chariot, Horse, Cannon, Soldier.</li>
+          <li>Special case: Soldier can capture General; General cannot capture Soldier.</li>
+          <li>You win by capturing all opponent pieces.</li>
+        </ul>
+      </section>
+
+      <section id="board" class="board" aria-label="Banqi board"></section>
+    </main>
+
+    <script src="app.js" defer></script>
+  </body>
+</html>
