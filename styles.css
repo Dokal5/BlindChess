@@ -45,19 +45,6 @@ h2 {
   margin: 0.75rem 0;
 }
 
-.game-layout {
-  display: grid;
-  grid-template-columns: minmax(220px, 280px) 1fr;
-  gap: 1rem;
-  align-items: start;
-}
-
-.game-layout .status-panel {
-  margin: 0;
-  position: sticky;
-  top: 0.75rem;
-}
-
 .auto-switch-hint {
   font-size: 0.95rem;
   opacity: 0.9;
