@@ -112,7 +112,10 @@ button:hover {
   font-size: 1.15rem;
   cursor: pointer;
   user-select: none;
+  padding: 0;
+  overflow: hidden;
 }
+
 
 .cell:hover {
   background: var(--tile-hover);
