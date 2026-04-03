@@ -17,7 +17,6 @@ const messageEl = document.getElementById("message");
 const redCapturesEl = document.getElementById("red-captures");
 const blackCapturesEl = document.getElementById("black-captures");
 const newGameBtn = document.getElementById("new-game");
-const passTurnBtn = document.getElementById("pass-turn");
 
 let board = [];
 let turn = "red";
@@ -52,7 +51,7 @@ function initGame() {
   turn = "red";
   selected = null;
   captures = { red: 0, black: 0 };
-  setMessage("Flip any facedown piece to begin.");
+  setMessage("先翻開任一顆暗棋開始。");
   updateStatus();
   renderBoard();
 }
@@ -62,7 +61,9 @@ function setMessage(msg) {
 }
 
 function updateStatus() {
-  turnEl.textContent = turn === "red" ? "Red" : "Black";
+  turnEl.textContent = turn === "red" ? "紅方" : "黑方";
+  turnEl.classList.toggle("red", turn === "red");
+  turnEl.classList.toggle("black", turn === "black");
   redCapturesEl.textContent = String(captures.red);
   blackCapturesEl.textContent = String(captures.black);
 }
@@ -182,8 +183,8 @@ function checkWin() {
   const redLeft = revealed.some((p) => p.color === "red");
   const blackLeft = revealed.some((p) => p.color === "black");
   if (!redLeft || !blackLeft) {
-    const winner = redLeft ? "Red" : "Black";
-    setMessage(`${winner} wins! Press New Game for another round.`);
+    const winner = redLeft ? "紅方" : "黑方";
+    setMessage(`${winner}獲勝！按 New Game 可再開一局。`);
     return true;
   }
   return false;
@@ -200,7 +201,7 @@ function onCellClick(idx) {
 
   if (piece && piece.faceDown) {
     piece.faceDown = false;
-    setMessage(`${turn === "red" ? "Red" : "Black"} flipped ${piece.label}.`);
+    setMessage(`${turn === "red" ? "紅方" : "黑方"}翻開了 ${piece.label}。`);
     renderBoard();
     if (!checkWin()) {
       switchTurn();
@@ -210,18 +211,18 @@ function onCellClick(idx) {
 
   if (selected === null) {
     if (!piece || piece.color !== turn) {
-      setMessage("You can only select your own revealed piece.");
+      setMessage("只能操作目前輪到方已翻開的棋子。");
       return;
     }
     selected = idx;
-    setMessage("Piece selected. Click destination.");
+    setMessage("已選取棋子，請點選目的地。");
     renderBoard();
     return;
   }
 
   if (selected === idx) {
     selected = null;
-    setMessage("Selection cleared.");
+    setMessage("已取消選取。");
     renderBoard();
     return;
   }
@@ -229,21 +230,21 @@ function onCellClick(idx) {
   const activePiece = board[selected];
   if (!activePiece || activePiece.color !== turn) {
     selected = null;
-    setMessage("Invalid state. Select again.");
+    setMessage("狀態異常，請重新選取棋子。");
     renderBoard();
     return;
   }
 
   if (!canMove(activePiece, selected, idx)) {
-    setMessage("Illegal move.");
+    setMessage("此步不合法。");
     return;
   }
 
   if (board[idx]) {
     captures[turn] += 1;
-    setMessage(`${turn === "red" ? "Red" : "Black"} captured ${board[idx].label}.`);
+    setMessage(`${turn === "red" ? "紅方" : "黑方"}吃掉了 ${board[idx].label}。`);
   } else {
-    setMessage("Moved.");
+    setMessage("已移動。");
   }
 
   board[idx] = activePiece;
@@ -256,11 +257,5 @@ function onCellClick(idx) {
 }
 
 newGameBtn.addEventListener("click", initGame);
-passTurnBtn.addEventListener("click", () => {
-  selected = null;
-  switchTurn();
-  setMessage(`${turn === "red" ? "Red" : "Black"} to move after pass.`);
-  renderBoard();
-});
 
 initGame();
