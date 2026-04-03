@@ -103,7 +103,7 @@ button:hover {
 .cell {
   aspect-ratio: 1;
   border: 2px solid #6b7280;
-  border-radius: 10px;
+  border-radius: 50%;
   background: var(--tile);
   display: flex;
   align-items: center;
@@ -143,6 +143,14 @@ button:hover {
 }
 
 @media (max-width: 720px) {
+  .game-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .game-layout .status-panel {
+    position: static;
+  }
+
   .board {
     gap: 0.35rem;
   }
